@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b12">
+<title>PI // Infinite Series Lab</title>
+<style>
+:root{color-scheme:dark;--bg:#090b12;--panel:#111622;--line:#252d3d;--muted:#8792a8;--text:#edf2ff;--accent:#9bf6d2;--blue:#8ba7ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 75% 0%,#172b3a 0,transparent 38%),radial-gradient(ellipse at 0% 70%,#1b1734 0,transparent 32%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+.wrap{max-width:1100px;margin:auto;padding:28px 22px 50px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:50px}.brand{display:flex;gap:12px;align-items:center;font-weight:800;letter-spacing:.12em}.logo{display:grid;place-items:center;width:42px;height:42px;border:1px solid #5e7a82;border-radius:13px;color:var(--accent);font-size:25px;background:#122027;box-shadow:0 0 35px #9bf6d21a}.pill{border:1px solid var(--line);border-radius:99px;padding:7px 12px;color:var(--muted);font-size:12px;letter-spacing:.08em}.hero{max-width:760px;margin-bottom:28px}.eyebrow{color:var(--accent);text-transform:uppercase;letter-spacing:.2em;font-size:11px;font-weight:800}.hero h1{font-size:clamp(38px,7vw,70px);line-height:1.02;letter-spacing:-.055em;margin:13px 0 18px}.hero h1 span{color:var(--accent)}.hero p{color:var(--muted);max-width:650px;margin:0;font-size:16px}.grid{display:grid;grid-template-columns:1.3fr .7fr;gap:18px}.panel{background:linear-gradient(145deg,#141b29ed,#0e131ded);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 20px 70px #0002}.panelhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}.panelhead h2{font-size:14px;margin:0;letter-spacing:.04em}.tiny{font-size:12px;color:var(--muted)}.result{font-size:clamp(23px,3.4vw,38px);letter-spacing:-.04em;overflow-wrap:anywhere;line-height:1.35;min-height:102px;font-variant-numeric:tabular-nums}.result.empty{color:#586477}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}.stat{background:#0a0f18;border:1px solid #202838;border-radius:12px;padding:12px}.stat label{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}.stat strong{font-size:19px;font-variant-numeric:tabular-nums}.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.btn{border:1px solid var(--line);background:#1a2231;color:var(--text);padding:12px 17px;border-radius:11px;font-weight:750;cursor:pointer;transition:transform .2s,border-color .2s,background .2s}.btn:hover{transform:translateY(-1px);border-color:#61788b}.btn.primary{background:var(--accent);color:#0a1714;border-color:var(--accent)}.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}.field{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:16px 0}.field label{color:#c4cce0}.field select,.field input{width:120px;background:#0a0f18;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:9px}.progress{height:6px;border-radius:99px;background:#252d3d;overflow:hidden;margin-top:17px}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--accent));transition:width .25s}.status{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:12px;margin-top:10px}.formula{margin-top:18px;color:#aab6ca;font:13px/1.9 ui-monospace,SFMono-Regular,Consolas,monospace;background:#090e16;border:1px solid var(--line);padding:16px;border-radius:12px;overflow-wrap:anywhere}.formula b{color:var(--accent);font-weight:600}.note{color:var(--muted);font-size:12px;margin-top:12px}.side{display:flex;flex-direction:column;gap:18px}.steps{display:grid;gap:14px}.step{display:flex;gap:12px;align-items:flex-start}.num{display:grid;place-items:center;flex:0 0 30px;height:30px;border:1px solid #334253;border-radius:9px;color:var(--accent);font-size:12px}.step strong{display:block;font-size:13px}.step p{margin:3px 0 0;color:var(--muted);font-size:12px}.footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:24px;color:#626f84;font-size:12px}a{color:var(--accent);text-decoration:none}
+@media(max-width:760px){.wrap{padding:18px 14px 35px}.top{margin-bottom:35px}.grid{grid-template-columns:1fr}.panel{padding:19px}.hero h1{font-size:46px}.result{min-height:70px}.stats{gap:7px}.stat{padding:10px}.stat strong{font-size:16px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body><main class="wrap">
+<header class="top"><div class="brand"><div class="logo">π</div><div>PI <span style="color:var(--muted);font-weight:500">/ SERIES LAB</span></div></div><div class="pill">NUMERICAL EXPERIMENT 001</div></header>
+<section class="hero"><div class="eyebrow">Infinite series · Chudnovsky method</div><h1>Pi, one term<br>at a <span>time.</span></h1><p>Pi sayısının sonsuz seriden nasıl oluştuğunu izle. Hesaplama adım adım ilerler; sonuç anında fırlamaz, her terim ekranda görünür.</p></section>
+<section class="grid">
+<div class="panel"><div class="panelhead"><h2>HESAPLAMA ÇIKTISI</h2><span class="pill" id="statePill">READY</span></div>
+<div class="tiny" style="margin-bottom:8px">π ≈</div><div class="result empty" id="result">Hesaplama başlatılmayı bekliyor…</div>
+<div class="stats"><div class="stat"><label>TERİM</label><strong id="terms">0</strong></div><div class="stat"><label>GEÇEN SÜRE</label><strong id="elapsed">0.0s</strong></div><div class="stat"><label>DOĞRULUK HEDEFİ</label><strong id="precision">30 hane</strong></div></div>
+<div class="progress"><div class="bar" id="bar"></div></div><div class="status"><span id="status">Hazır. Bir hassasiyet seç.</span><span id="percent">0%</span></div>
+<div class="controls"><button class="btn primary" id="start">▶ Hesaplamayı başlat</button><button class="btn" id="reset">Sıfırla</button><button class="btn" id="copy" disabled>Sonucu kopyala</button></div>
+<div class="formula"><b>1 / π</b> = 12 Σ (−1)ᵏ (6k)! (13591409 + 545140134k)<br>÷ [(3k)! (k!)³ 640320^(3k + 3/2)]</div>
+<div class="note">Formül notu: Verdiğin 545140343 sabiti standart Chudnovsky serisindeki 545140134 değerinden farklı. Doğru π sonucunu verebilmesi için standart sabit kullanılıyor.</div>
+</div>
+<aside class="side"><div class="panel"><div class="panelhead"><h2>ÇALIŞMA AYARLARI</h2><span class="tiny">CUSTOM</span></div>
+<div class="field"><label for="digits">Ondalık hane</label><select id="digits"><option value="15">15 hane</option><option value="30" selected>30 hane</option><option value="50">50 hane</option><option value="100">100 hane</option><option value="200">200 hane</option></select></div>
+<div class="field"><label for="delay">Terim aralığı</label><select id="delay"><option value="120">Hızlı · 120 ms</option><option value="350" selected>Dengeli · 350 ms</option><option value="700">Yavaş · 700 ms</option><option value="1200">Çok yavaş · 1.2 s</option></select></div>
+<div class="note">Her terim yaklaşık 14 basamak doğruluk kazandırır. Animasyon süresi seçtiğin terim aralığına göre uzar.</div></div>
+<div class="panel"><div class="panelhead"><h2>NASIL ÇALIŞIYOR?</h2></div><div class="steps">
+<div class="step"><div class="num">01</div><div><strong>Seriyi kur</strong><p>Chudnovsky terimleri sırayla hesaplanır.</p></div></div>
+<div class="step"><div class="num">02</div><div><strong>Toplamı güncelle</strong><p>Her yeni terim, hassasiyetli toplamın üzerine eklenir.</p></div></div>
+<div class="step"><div class="num">03</div><div><strong>π değerini çıkar</strong><p>Seri toplamından π hesaplanır ve ekranda gösterilir.</p></div></div></div></div></aside></section>
+<footer class="footer"><span>PI SERIES LAB · BIGINT ARITHMETIC</span><span>Vanilla HTML / CSS / JS · <a href="https://github.com/UziManTR/PI">GitHub repository ↗</a></span></footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let running=false, stopRequested=false, startedAt=0, timer=null, finalValue="";
+function sqrtBigInt(n){if(n<2n)return n;let x0=n, x1=(x0+n/x0)>>1n;while(x1<x0){x0=x1;x1=(x0+n/x0)>>1n;}return x0;}
+function formatScaled(value, digits){let s=value.toString().padStart(digits+1,"0");return s.slice(0,-digits)+"."+s.slice(-digits);}
+const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+function setState(s){$("statePill").textContent=s;}
+function resetUI(){running=false;stopRequested=true;if(timer)clearInterval(timer);$("start").disabled=false;$("start").textContent="▶ Hesaplamayı başlat";$("copy").disabled=true;$("result").textContent="Hesaplama başlatılmayı bekliyor…";$("result").classList.add("empty");$("terms").textContent="0";$("elapsed").textContent="0.0s";$("bar").style.width="0%";$("percent").textContent="0%";$("status").textContent="Hazır. Bir hassasiyet seç.";setState("READY");finalValue="";}
+async function calculate(){if(running)return;running=true;stopRequested=false;$("start").disabled=true;$("start").textContent="⏳ Hesaplanıyor…";$("copy").disabled=true;$("result").classList.remove("empty");setState("RUNNING");
+const digits=Number($("digits").value), delay=Number($("delay").value), scale=10n**BigInt(digits+12), terms=Math.max(1,Math.ceil(digits/14));$("precision").textContent=digits+" hane";startedAt=performance.now();timer=setInterval(()=>$("elapsed").textContent=((performance.now()-startedAt)/1000).toFixed(1)+"s",100);
+let term=scale, sum=13591409n*term;
+try{
+for(let k=1;k<=terms;k++){if(stopRequested)return;
+const K=BigInt(k);
+term=-(term* (6n*K-5n)*(2n*K-1n)*(6n*K-1n))/(K*K*K*10939058860032000n);
+sum+=term*(13591409n+545140134n*K);
+$("terms").textContent=k;$("status").textContent="Terim "+k+" hesaplandı, toplam güncelleniyor…";$("bar").style.width=(k/terms*100)+"%";$("percent").textContent=Math.round(k/terms*100)+"%";
+const sqrt10005=sqrtBigInt(10005n*scale*scale);
+const piScaled=(426880n*sqrt10005*scale)/sum;
+$("result").textContent=formatScaled(piScaled,digits+12).slice(0,digits+2);
+await sleep(delay);
+}
+if(stopRequested)return;
+const sqrt10005=sqrtBigInt(10005n*scale*scale);const piScaled=(426880n*sqrt10005*scale)/sum;
+finalValue=formatScaled(piScaled,digits+12).slice(0,digits+2);
+$("result").textContent=finalValue;$("status").textContent="Tamamlandı. Sonucu kopyalayabilirsin.";$("bar").style.width="100%";$("percent").textContent="100%";setState("COMPLETE");$("copy").disabled=false;
+}catch(e){$("status").textContent="Hesaplama hatası: "+e.message;setState("ERROR");}
+finally{clearInterval(timer);running=false;$("start").disabled=false;$("start").textContent="↻ Yeniden hesapla";}}
+$("start").addEventListener("click",()=>{stopRequested=false;calculate();});
+$("reset").addEventListener("click",resetUI);
+$("copy").addEventListener("click",async()=>{if(!finalValue)return;try{await navigator.clipboard.writeText(finalValue);$("copy").textContent="✓ Kopyalandı";setTimeout(()=>$("copy").textContent="Sonucu kopyala",1300);}catch{$("status").textContent="Kopyalama desteklenmiyor; sonucu seçip kopyalayabilirsin.";}});
+$("digits").addEventListener("change",()=>{$("precision").textContent=$("digits").value+" hane";});
+</script></body></html>
