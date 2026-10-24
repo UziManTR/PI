@@ -25,9 +25,9 @@
 <div class="note">Formül notu: Verdiğin 545140343 sabiti standart Chudnovsky serisindeki 545140134 değerinden farklı. Doğru π sonucunu verebilmesi için standart sabit kullanılıyor.</div>
 </div>
 <aside class="side"><div class="panel"><div class="panelhead"><h2>ÇALIŞMA AYARLARI</h2><span class="tiny">CUSTOM</span></div>
-<div class="field"><label for="digits">Ondalık hane</label><select id="digits"><option value="15">15 hane</option><option value="30" selected>30 hane</option><option value="50">50 hane</option><option value="100">100 hane</option><option value="200">200 hane</option></select></div>
-<div class="field"><label for="delay">Terim aralığı</label><select id="delay"><option value="120">Hızlı · 120 ms</option><option value="350" selected>Dengeli · 350 ms</option><option value="700">Yavaş · 700 ms</option><option value="1200">Çok yavaş · 1.2 s</option></select></div>
-<div class="note">Her terim yaklaşık 14 basamak doğruluk kazandırır. Animasyon süresi seçtiğin terim aralığına göre uzar.</div></div>
+<div class="field"><label for="digits">Ondalık hane</label><input id="digits" type="number" min="1" max="5000" step="1" value="30" inputmode="numeric" aria-describedby="digitsHelp"></div>
+<div class="field"><label for="delay">Terim aralığı</label><select id="delay"><option value="75">⚡ Ultra hızlı · 75 ms</option><option value="120">Hızlı · 120 ms</option><option value="350" selected>Dengeli · 350 ms</option><option value="700">Yavaş · 700 ms</option><option value="1200">Çok yavaş · 1.2 s</option></select></div>
+<div class="note" id="digitsHelp">1 ile 5000 arasında istediğin hane sayısını yaz. Her terim yaklaşık 14 basamak doğruluk kazandırır; animasyon süresi seçtiğin aralığa göre uzar.</div></div>
 <div class="panel"><div class="panelhead"><h2>NASIL ÇALIŞIYOR?</h2></div><div class="steps">
 <div class="step"><div class="num">01</div><div><strong>Seriyi kur</strong><p>Chudnovsky terimleri sırayla hesaplanır.</p></div></div>
 <div class="step"><div class="num">02</div><div><strong>Toplamı güncelle</strong><p>Her yeni terim, hassasiyetli toplamın üzerine eklenir.</p></div></div>
@@ -43,7 +43,7 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 function setState(s){$("statePill").textContent=s;}
 function resetUI(){running=false;stopRequested=true;if(timer)clearInterval(timer);$("start").disabled=false;$("start").textContent="▶ Hesaplamayı başlat";$("copy").disabled=true;$("result").textContent="Hesaplama başlatılmayı bekliyor…";$("result").classList.add("empty");$("terms").textContent="0";$("elapsed").textContent="0.0s";$("bar").style.width="0%";$("percent").textContent="0%";$("status").textContent="Hazır. Bir hassasiyet seç.";setState("READY");finalValue="";}
 async function calculate(){if(running)return;running=true;stopRequested=false;$("start").disabled=true;$("start").textContent="⏳ Hesaplanıyor…";$("copy").disabled=true;$("result").classList.remove("empty");setState("RUNNING");
-const digits=Number($("digits").value), delay=Number($("delay").value), scale=10n**BigInt(digits+12), terms=Math.max(1,Math.ceil(digits/14));$("precision").textContent=digits+" hane";startedAt=performance.now();timer=setInterval(()=>$("elapsed").textContent=((performance.now()-startedAt)/1000).toFixed(1)+"s",100);
+const digits=Number($("digits").value), delay=Number($("delay").value);if(!Number.isInteger(digits)||digits<1||digits>5000){running=false;$("start").disabled=false;$("start").textContent="▶ Hesaplamayı başlat";$("status").textContent="Hane sayısı 1 ile 5000 arasında tam sayı olmalı.";setState("INPUT ERROR");return;}const scale=10n**BigInt(digits+12), terms=Math.max(1,Math.ceil(digits/14));$("precision").textContent=digits+" hane";startedAt=performance.now();timer=setInterval(()=>$("elapsed").textContent=((performance.now()-startedAt)/1000).toFixed(1)+"s",100);
 let term=scale, sum=13591409n*term;
 try{
 for(let k=1;k<=terms;k++){if(stopRequested)return;
@@ -65,5 +65,5 @@ finally{clearInterval(timer);running=false;$("start").disabled=false;$("start").
 $("start").addEventListener("click",()=>{stopRequested=false;calculate();});
 $("reset").addEventListener("click",resetUI);
 $("copy").addEventListener("click",async()=>{if(!finalValue)return;try{await navigator.clipboard.writeText(finalValue);$("copy").textContent="✓ Kopyalandı";setTimeout(()=>$("copy").textContent="Sonucu kopyala",1300);}catch{$("status").textContent="Kopyalama desteklenmiyor; sonucu seçip kopyalayabilirsin.";}});
-$("digits").addEventListener("change",()=>{$("precision").textContent=$("digits").value+" hane";});
+$("digits").addEventListener("input",()=>{const n=Number($("digits").value);if(Number.isInteger(n)&&n>=1&&n<=5000)$("precision").textContent=n+" hane";});
 </script></body></html>
